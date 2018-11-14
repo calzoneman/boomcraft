@@ -46,20 +46,6 @@ public class Launcher {
 
     private static void startGame(LocalApplet applet) {
         applet.init();
-
-        System.out.println("Loading sounds");
-        applet.loadSounds(Paths.get("resources"));
-
-        if (System.getProperty("minecraft.loadlevel") != null) {
-            System.out.println("Loading level from level.dat");
-            applet.setLoadLevelFlag();
-        }
-
         applet.start();
-
-        if (System.getProperty("minecraft.admin") != null) {
-            System.out.println("Setting player type to admin");
-            applet.setPlayerAdmin();
-        }
     }
 }
