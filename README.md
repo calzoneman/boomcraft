@@ -25,12 +25,12 @@ texture packs) and thus I don't know what the unmodified md5sum is
 
 Features include:
 
-  * Loading a level from `level.dat`
+  * Loading a level from a .dat file
   * Setting the admin flag to allow breaking bedrock in loaded levels
   * Load sounds from local disk since the files on www.minecraft.net are long
     gone
-  * Java bytecode patch to work around the broken Comparator in newer JVMs that
-    caused crashes on levels with certain geometry
+  * Workarounds for running the jar locally since the official website applet is
+    long gone
 
 For intellectual property reasons, I can't distribute the aforementioned JAR
 files, nor the resource files, in this repository.  This repo is targeted at
@@ -45,10 +45,8 @@ server and clean room implementation of Minecraft Classic in C#.
   * Add documentation about the process of reverse-engineering and fixing
   * Fix `import_jar.py` to distinguish between 0.30-classic and
     0.30-survivaltest to avoid overwriting the destination file
-  * Add flag to make sort-patching optional during import
   * Add script to detect Minecraft version from arbitrary JAR files (without
     applying the sort patch)
-  * Add convenience wrapper for copying a level to `level.dat` and loading it
 
 ## Known Issues
 

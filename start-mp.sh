@@ -1,28 +1,24 @@
 #!/bin/bash
 
 usage() {
-    printf "Usage: %s: [-ah] [-l LEVEL]\n" $0
-    printf "  -a		Set admin flag (makes bedrock breakable)\n"
+    printf "Usage: %s: [-h] [-m MPPASS] [-p PORT] [-s SERVER] [-u USERNAME]\n" $0
     printf "  -h		Show this help information\n"
-    printf "  -l		Load level from a dat file\n"
+    printf "  -m		Set the mppass (used for name verification)\n"
+    printf "  -p		Set the server port to connect to\n"
+    printf "  -s		Set the server hostname to connect to\n"
+    printf "  -u		Set the username\n"
 }
 
 set -e
 additional_properties=
 
-while getopts "ahl:" opt; do
+while getopts "hm:p:s:u:" opt; do
     case $opt in
-        a) additional_properties+=" -Dminecraft.admin=1";;
         h) usage; exit 2;;
-        l)
-           additional_properties+=" -Dminecraft.loadlevel=1"
-           if [ ! -f "$OPTARG" ]; then
-               echo "Cannot load level: '$OPTARG' doesn't exist or is not a file"
-               exit 1
-           fi
-
-           cp "$OPTARG" level.dat
-           ;;
+        m) additional_properties+=" -Dminecraft.param.mppass=$OPTARG";;
+        p) additional_properties+=" -Dminecraft.param.port=$OPTARG";;
+        s) additional_properties+=" -Dminecraft.param.server=$OPTARG";;
+        u) additional_properties+=" -Dminecraft.param.username=$OPTARG";;
         *) usage; exit 2;;
     esac
 done
@@ -38,11 +34,11 @@ case $1 in
     0.0.23a_01)
         launcher_pkg="minecraft023a"
         ;;
-    0.28_01|0.29_02|survivaltest|0.30)
+    0.28_01|0.29_02|0.30)
         launcher_pkg="minecraft030"
         ;;
     *)
-        echo "Unknown version '$1'.  Supported versions are: 0.0.13a_03 0.0.23a_1 0.28_01 0.29_02 survivaltest 0.30"
+        echo "Unknown version '$1'.  Supported versions are: 0.0.13a_03 0.0.23a_1 0.28_01 0.29_02 0.30"
         exit 1
         ;;
 esac
@@ -52,8 +48,11 @@ if [ ! -f "minecraft/minecraft-$1.jar" ]; then
     exit 1
 fi
 
+echo "props=$additional_properties"
+
 java -cp lib/jinput.jar:lib/lwjgl.jar:lib/lwjgl_util.jar:minecraft/minecraft-$1.jar:build/ \
      -Djava.library.path=native/linux \
      -Djava.util.Arrays.useLegacyMergeSort=true \
+     -Dminecraft.param.sessionid \
      $additional_properties \
      net.calzoneman.$launcher_pkg.Launcher
