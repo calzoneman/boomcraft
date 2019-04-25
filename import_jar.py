@@ -21,6 +21,7 @@ def detect_version(loader):
 
     try_classes = [
         'com/mojang/minecraft/c', # 0.13a
+        'com/mojang/minecraft/d', # 0.21a
         'com/mojang/minecraft/k', # 0.23a
         'com/mojang/minecraft/l'  # 0.28/29/30
     ]

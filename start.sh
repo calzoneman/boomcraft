@@ -32,7 +32,7 @@ shift $((OPTIND-1))
 launcher_pkg=
 
 case $1 in
-    0.0.13a_03)
+    0.0.13a_03|0.0.21a)
         launcher_pkg="minecraft013a"
         ;;
     0.0.23a_01)
